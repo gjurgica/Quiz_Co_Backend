@@ -13,5 +13,6 @@ namespace Quiz_co.Services.Interfaces
         void Logout();
         UserViewModel GetUserById(string id);
         void UpdateUser(UserViewModel user);
+        IEnumerable<UserViewModel> GetAllUsers();
     }
 }

@@ -25,6 +25,11 @@ namespace Quiz_co.Services.Services
             _signInManager = signInManager;
         }
 
+        public IEnumerable<UserViewModel> GetAllUsers()
+        {
+            return _mapper.Map<IEnumerable<UserViewModel>>(_userRepository.GetAll());
+        }
+
         public UserViewModel GetCurrentUser(string username)
         {
             var user = _userRepository.GetByUsername(username);
