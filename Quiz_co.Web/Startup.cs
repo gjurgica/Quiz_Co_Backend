@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,15 @@ namespace Quiz_co.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://dev-7fbpq-3f.auth0.com/";
+                options.Audience = "https:api.quiz.com";
+            });
 
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -67,6 +77,7 @@ namespace Quiz_co.Web
 
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
+
 
             app.UseMvc();
         }

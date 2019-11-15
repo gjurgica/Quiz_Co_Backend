@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quiz_co.Services.Interfaces;
@@ -9,6 +10,7 @@ using Quiz_co.ViewModels;
 
 namespace Quiz_co.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -24,7 +26,7 @@ namespace Quiz_co.Web.Controllers
         {
             return Ok(_userService.GetAllUsers());
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginViewModel model)
         {
@@ -37,6 +39,7 @@ namespace Quiz_co.Web.Controllers
             }
             return NotFound("Username or Password is incorrect!");
         }
+        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterViewModel model)
         {
