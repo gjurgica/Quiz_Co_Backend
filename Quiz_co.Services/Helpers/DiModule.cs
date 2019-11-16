@@ -20,6 +20,7 @@ namespace Quiz_co.Services.Helpers
             services.AddTransient<IRepository<Question>, QuestionRepository>();
             services.AddTransient<IRepository<Answer>, AnswerRepository>();
 
+
             services.AddDbContext<Quiz_coDbContext>(ob => ob.UseSqlServer(
                 connectionString
             ));

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Quiz_co.Services.Helpers;
 using Quiz_co.Services.Interfaces;
 using Quiz_co.Services.Services;
@@ -29,23 +31,8 @@ namespace Quiz_co.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://dev-7fbpq-3f.auth0.com/";
-                options.Audience = "https:api.quiz.com";
-            });
 
-            services.AddCors(options => {
-                options.AddPolicy("CorsPolicy", builder =>
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
+            services.AddCors();
 
 
             services.AddTransient<IUserService, UserService>();
@@ -53,10 +40,6 @@ namespace Quiz_co.Web
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IAnswerService, AnswerService>();
 
-            DiModule.RegisterModules(
-                 services,
-                 Configuration.GetConnectionString("Quiz_coDbConnection")
-             );
 
             services.AddAutoMapper(opts =>
             {
@@ -65,6 +48,34 @@ namespace Quiz_co.Web
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var appConfig = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appConfig);
+
+            var appSettings = appConfig.Get<AppSettings>();
+            var secret = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters =
+                 new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(secret),
+                     ValidateIssuer = false,
+                     ValidateAudience = false
+                 };
+            });
+            DiModule.RegisterModules(
+                 services,
+                 appSettings.Quiz_coDbConnection
+             );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +86,13 @@ namespace Quiz_co.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("Authorization");
+            });        
             app.UseAuthentication();
 
 
