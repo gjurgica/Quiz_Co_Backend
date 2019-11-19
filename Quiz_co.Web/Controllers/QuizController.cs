@@ -10,7 +10,7 @@ using Quiz_co.ViewModels;
 
 namespace Quiz_co.Web.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class QuizController : ControllerBase
@@ -22,11 +22,12 @@ namespace Quiz_co.Web.Controllers
             _quizService = quizService;
             _userService = userService;
         }
-        [AllowAnonymous]
+        
         [HttpGet]
         public ActionResult<IEnumerable<QuizViewModel>> Get()
         {
-            return Ok(_quizService.GetAllQuizzes());
+            var quizes = _quizService.GetAllQuizzes();
+            return Ok(quizes);
         }
         [HttpPost("newquiz")]
         public ActionResult NewQuiz([FromBody] QuizViewModel model)

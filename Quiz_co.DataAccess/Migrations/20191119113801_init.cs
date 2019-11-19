@@ -164,6 +164,7 @@ namespace Quiz_co.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -221,22 +222,50 @@ namespace Quiz_co.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9921bd66-bccd-4c4a-8ebb-e25dbbe545f9", "c22d6f34-34f2-441f-99c4-54a5abcdceed", "admin", "ADMIN" });
+                values: new object[] { "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da", "02ff8218-efb5-46ef-a99d-8be120e16058", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6c5624d3-a8aa-4a04-8bc5-e19be31ea660", "00341b33-5796-4561-92bc-3036b363bd06", "user", "USER" });
+                values: new object[] { "66f53279-69af-4db5-814d-9f63612dac02", "be753643-dd3d-4c94-a2c8-4e1af3094f7b", "user", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImageUrl", "Joined", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3c3f04f8-8cc1-4bba-adb0-a587921a5847", 0, "e369b9f0-192d-40d6-91a4-2ee6c9cff1b9", "bob@gmail.com", true, "Bob", null, new DateTime(2019, 11, 13, 17, 34, 49, 366, DateTimeKind.Local), "Bobsky", false, null, "BOB@GMAIL.COM", "BOBY", "AQAAAAEAACcQAAAAEFgHYnXnzhJtMUHn0UpWwmFDBBqCNKBHkGRUxa4kpjdTRjzkg69RiKHSp+RhBPWM4g==", null, false, "", false, "Boby" });
+                values: new object[] { "8094066f-3da4-4cd6-ba22-356f93061210", 0, "13e919db-67cf-4d39-a71d-6cf5b0176898", "bob@gmail.com", true, "Bob", null, new DateTime(2019, 11, 19, 12, 38, 0, 300, DateTimeKind.Local), "Bobsky", false, null, "BOB@GMAIL.COM", "BOBY", "AQAAAAEAACcQAAAAELU9QwmcT9KuqIcRP5wQe6v4Oim/9WA01EY8KsaWoisaj0a+mAZjSOIDtPvNjilExw==", null, false, "", false, "Boby" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "3c3f04f8-8cc1-4bba-adb0-a587921a5847", "9921bd66-bccd-4c4a-8ebb-e25dbbe545f9" });
+                values: new object[] { "8094066f-3da4-4cd6-ba22-356f93061210", "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da" });
+
+            migrationBuilder.InsertData(
+                table: "Quizzes",
+                columns: new[] { "Id", "ImageUrl", "Title", "UserId" },
+                values: new object[] { 1, "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", "Test Your Halloween IQ!", "8094066f-3da4-4cd6-ba22-356f93061210" });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Content", "QuizId" },
+                values: new object[] { 1, "On what day do we celebrate Halloween?", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Content", "QuizId" },
+                values: new object[] { 2, "The original spelling of the word ‘Halloween’ had an apostrophe. Where did it go?", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Answers",
+                columns: new[] { "Id", "Content", "IsCorrect", "QuestionId" },
+                values: new object[,]
+                {
+                    { 1, "October 30", false, 1 },
+                    { 2, "November 31", false, 1 },
+                    { 3, "October 31", true, 1 },
+                    { 4, "Hallow’een", false, 2 },
+                    { 5, "H’alloween", false, 2 },
+                    { 6, "Hallowe’en", true, 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",

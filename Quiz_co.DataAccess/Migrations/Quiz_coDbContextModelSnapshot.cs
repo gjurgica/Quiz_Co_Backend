@@ -43,8 +43,8 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "9921bd66-bccd-4c4a-8ebb-e25dbbe545f9", ConcurrencyStamp = "c22d6f34-34f2-441f-99c4-54a5abcdceed", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "6c5624d3-a8aa-4a04-8bc5-e19be31ea660", ConcurrencyStamp = "00341b33-5796-4561-92bc-3036b363bd06", Name = "user", NormalizedName = "USER" }
+                        new { Id = "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da", ConcurrencyStamp = "02ff8218-efb5-46ef-a99d-8be120e16058", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "66f53279-69af-4db5-814d-9f63612dac02", ConcurrencyStamp = "be753643-dd3d-4c94-a2c8-4e1af3094f7b", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
@@ -119,7 +119,7 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles");
 
                     b.HasData(
-                        new { UserId = "3c3f04f8-8cc1-4bba-adb0-a587921a5847", RoleId = "9921bd66-bccd-4c4a-8ebb-e25dbbe545f9" }
+                        new { UserId = "8094066f-3da4-4cd6-ba22-356f93061210", RoleId = "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da" }
                     );
                 });
 
@@ -155,6 +155,15 @@ namespace Quiz_co.DataAccess.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
+
+                    b.HasData(
+                        new { Id = 1, Content = "October 30", IsCorrect = false, QuestionId = 1 },
+                        new { Id = 2, Content = "November 31", IsCorrect = false, QuestionId = 1 },
+                        new { Id = 3, Content = "October 31", IsCorrect = true, QuestionId = 1 },
+                        new { Id = 4, Content = "Hallow’een", IsCorrect = false, QuestionId = 2 },
+                        new { Id = 5, Content = "H’alloween", IsCorrect = false, QuestionId = 2 },
+                        new { Id = 6, Content = "Hallowe’en", IsCorrect = true, QuestionId = 2 }
+                    );
                 });
 
             modelBuilder.Entity("Quiz_co.Domain.Question", b =>
@@ -172,6 +181,11 @@ namespace Quiz_co.DataAccess.Migrations
                     b.HasIndex("QuizId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new { Id = 1, Content = "On what day do we celebrate Halloween?", QuizId = 1 },
+                        new { Id = 2, Content = "The original spelling of the word ‘Halloween’ had an apostrophe. Where did it go?", QuizId = 1 }
+                    );
                 });
 
             modelBuilder.Entity("Quiz_co.Domain.Quiz", b =>
@@ -179,6 +193,8 @@ namespace Quiz_co.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Title");
 
@@ -189,6 +205,10 @@ namespace Quiz_co.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Quizzes");
+
+                    b.HasData(
+                        new { Id = 1, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", Title = "Test Your Halloween IQ!", UserId = "8094066f-3da4-4cd6-ba22-356f93061210" }
+                    );
                 });
 
             modelBuilder.Entity("Quiz_co.Domain.User", b =>
@@ -252,7 +272,7 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "3c3f04f8-8cc1-4bba-adb0-a587921a5847", AccessFailedCount = 0, ConcurrencyStamp = "e369b9f0-192d-40d6-91a4-2ee6c9cff1b9", Email = "bob@gmail.com", EmailConfirmed = true, FirstName = "Bob", Joined = new DateTime(2019, 11, 13, 17, 34, 49, 366, DateTimeKind.Local), LastName = "Bobsky", LockoutEnabled = false, NormalizedEmail = "BOB@GMAIL.COM", NormalizedUserName = "BOBY", PasswordHash = "AQAAAAEAACcQAAAAEFgHYnXnzhJtMUHn0UpWwmFDBBqCNKBHkGRUxa4kpjdTRjzkg69RiKHSp+RhBPWM4g==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "Boby" }
+                        new { Id = "8094066f-3da4-4cd6-ba22-356f93061210", AccessFailedCount = 0, ConcurrencyStamp = "13e919db-67cf-4d39-a71d-6cf5b0176898", Email = "bob@gmail.com", EmailConfirmed = true, FirstName = "Bob", Joined = new DateTime(2019, 11, 19, 12, 38, 0, 300, DateTimeKind.Local), LastName = "Bobsky", LockoutEnabled = false, NormalizedEmail = "BOB@GMAIL.COM", NormalizedUserName = "BOBY", PasswordHash = "AQAAAAEAACcQAAAAELU9QwmcT9KuqIcRP5wQe6v4Oim/9WA01EY8KsaWoisaj0a+mAZjSOIDtPvNjilExw==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "Boby" }
                     );
                 });
 

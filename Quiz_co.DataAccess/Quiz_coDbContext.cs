@@ -87,6 +87,74 @@ namespace Quiz_co.DataAccess
                         UserId = bobUserId
                     }
                 );
+            modelBuilder.Entity<Quiz>().HasData(
+               new Quiz
+               {
+                   Id = 1,
+                   Title = "Test Your Halloween IQ!", 
+                   ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD",
+                   UserId = bobUserId
+
+               }
+               );
+            modelBuilder.Entity<Question>().HasData(
+                new Question
+                {
+                    Id = 1,
+                    Content = "On what day do we celebrate Halloween?",
+                    QuizId = 1
+                },
+                new Question
+                {
+                    Id = 2,
+                    Content = "The original spelling of the word ‘Halloween’ had an apostrophe. Where did it go?",
+                    QuizId = 1
+                }
+                );
+            modelBuilder.Entity<Answer>().HasData(
+                new Answer
+                {
+                    Id = 1,
+                    Content = "October 30",
+                    IsCorrect = false,
+                    QuestionId = 1
+                },
+                new Answer
+                {
+                    Id = 2,
+                    Content = "November 31",
+                    IsCorrect = false,
+                    QuestionId = 1
+                },
+                new Answer
+                {
+                    Id = 3,
+                    Content = "October 31",
+                    IsCorrect = true,
+                    QuestionId = 1
+                },
+                new Answer
+                {
+                    Id = 4,
+                    Content = "Hallow’een",
+                    IsCorrect = false,
+                    QuestionId = 2
+                },
+                new Answer
+                {
+                    Id = 5,
+                    Content = "H’alloween",
+                    IsCorrect = false,
+                    QuestionId = 2
+                },
+                new Answer
+                {
+                    Id = 6,
+                    Content = "Hallowe’en",
+                    IsCorrect = true,
+                    QuestionId = 2
+                }
+                );
 
         }
     }

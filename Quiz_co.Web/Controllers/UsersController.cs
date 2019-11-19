@@ -20,7 +20,7 @@ namespace Quiz_co.Web.Controllers
         {
             _userService = userService;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<UserViewModel>> Get()
         {

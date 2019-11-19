@@ -34,6 +34,8 @@ namespace Quiz_co.Web
 
             services.AddCors();
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IQuizService, QuizService>();
@@ -47,7 +49,6 @@ namespace Quiz_co.Web
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var appConfig = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appConfig);
@@ -94,8 +95,6 @@ namespace Quiz_co.Web
                         .WithExposedHeaders("Authorization");
             });        
             app.UseAuthentication();
-
-
             app.UseMvc();
         }
     }
