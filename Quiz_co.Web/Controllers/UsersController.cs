@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,12 +33,13 @@ namespace Quiz_co.Web.Controllers
         {
 
             var result = _userService.Login(model);
-            if (result == "Succeeded")
+            if (result != null)
             {
 
                 return Ok(result);
             }
-            return NotFound("Username or Password is incorrect!");
+            var error = new ErrorViewModel("Username or Password is incorrect!", HttpStatusCode.NotFound);
+            return new JsonResult(error) { StatusCode = error.StatusCode };
         }
         [AllowAnonymous]
         [HttpPost("register")]
@@ -45,11 +47,12 @@ namespace Quiz_co.Web.Controllers
         {
             try
             {
-                _userService.Register(model);
-                return Ok("Successfully registered user!");
+                var user = _userService.Register(model);
+                return Ok(user);
             }catch(Exception e)
             {
-                return BadRequest("Something went wrong. Please contact support!");
+                var error = new ErrorViewModel("Something went wrong. Please contact support!", HttpStatusCode.BadRequest);
+                return new JsonResult(error) { StatusCode = error.StatusCode };
             }
         }
     }

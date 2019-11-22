@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Quiz_co.DataAccess.Interfaces;
 using Quiz_co.Domain;
+using Quiz_co.Services.Helpers;
 using Quiz_co.Services.Interfaces;
 using Quiz_co.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace Quiz_co.Services.Services
@@ -16,13 +21,15 @@ namespace Quiz_co.Services.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IOptions<AppSettings> _options;
 
-        public UserService(IUserRepository<User> userService, UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public UserService(IUserRepository<User> userService, UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IOptions<AppSettings> options)
         {
             _userRepository = userService;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _options = options;
         }
 
         public IEnumerable<UserViewModel> GetAllUsers()
@@ -50,8 +57,31 @@ namespace Quiz_co.Services.Services
             return _mapper.Map<UserViewModel>(user);
         }
 
-        public string Login(LoginViewModel loginModel)
+        public UserViewModel Login(LoginViewModel loginModel)
         {
+            var user = _userRepository.GetByUsername(loginModel.UserName);
+            if (user == null) return null;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_options.Value.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new System.Security.Claims.ClaimsIdentity(
+                    new[]
+                    {
+                        new Claim(ClaimTypes.Name,
+                        $"{user.FirstName} {user.LastName}"),
+                        new Claim(ClaimTypes.NameIdentifier,
+                        user.Id)
+                    }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             SignInResult result = _signInManager.PasswordSignInAsync(
                 loginModel.UserName,
                 loginModel.Password,
@@ -60,9 +90,11 @@ namespace Quiz_co.Services.Services
 
             if (!result.Succeeded)
             {
-                return "Failed";
+                return null;
             }
-            return "Succeeded";
+            var loggedUser = _mapper.Map<UserViewModel>(user);
+            loggedUser.Token = tokenHandler.WriteToken(token);
+            return loggedUser;
         }
 
         public void Logout()
@@ -70,7 +102,7 @@ namespace Quiz_co.Services.Services
             _signInManager.SignOutAsync();
         }
 
-        public void Register(RegisterViewModel registerModel)
+        public UserViewModel Register(RegisterViewModel registerModel)
         {
             if (_userRepository.GetByUsername(registerModel.UserName) != null)
             {
@@ -92,7 +124,7 @@ namespace Quiz_co.Services.Services
             }
             else
                 throw new Exception(result.Errors.ToString());
-            Login(new LoginViewModel
+           return  Login(new LoginViewModel
             {
                 UserName = registerModel.UserName,
                 Password = registerModel.Password

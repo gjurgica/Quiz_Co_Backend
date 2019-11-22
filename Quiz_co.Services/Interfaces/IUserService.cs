@@ -7,8 +7,8 @@ namespace Quiz_co.Services.Interfaces
 {
     public interface IUserService
     {
-        void Register(RegisterViewModel registerModel);
-        string Login(LoginViewModel loginModel);
+        UserViewModel Register(RegisterViewModel registerModel);
+        UserViewModel Login(LoginViewModel loginModel);
         UserViewModel GetCurrentUser(string username);
         void Logout();
         UserViewModel GetUserById(string id);

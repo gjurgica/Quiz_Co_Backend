@@ -13,5 +13,6 @@ namespace Quiz_co.ViewModels
         public string Email { get; set; }
         public DateTime Joined { get; set; }
         public string ImageUrl { get; set; }
+        public string Token { get; set; }
     }
 }
