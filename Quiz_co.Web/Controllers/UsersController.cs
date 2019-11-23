@@ -11,7 +11,6 @@ using Quiz_co.ViewModels;
 
 namespace Quiz_co.Web.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -21,13 +20,11 @@ namespace Quiz_co.Web.Controllers
         {
             _userService = userService;
         }
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<UserViewModel>> Get()
         {
             return Ok(_userService.GetAllUsers());
         }
-        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginViewModel model)
         {
@@ -41,7 +38,6 @@ namespace Quiz_co.Web.Controllers
             var error = new ErrorViewModel("Username or Password is incorrect!", HttpStatusCode.NotFound);
             return new JsonResult(error) { StatusCode = error.StatusCode };
         }
-        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterViewModel model)
         {
@@ -54,6 +50,12 @@ namespace Quiz_co.Web.Controllers
                 var error = new ErrorViewModel("Something went wrong. Please contact support!", HttpStatusCode.BadRequest);
                 return new JsonResult(error) { StatusCode = error.StatusCode };
             }
+        }
+        [HttpPost("logout")]
+        public IActionResult LogOut()
+        {
+            _userService.Logout();
+            return Ok("User is logout");
         }
     }
 }
