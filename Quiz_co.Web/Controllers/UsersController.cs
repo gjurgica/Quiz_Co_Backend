@@ -51,7 +51,7 @@ namespace Quiz_co.Web.Controllers
                 return new JsonResult(error) { StatusCode = error.StatusCode };
             }
         }
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public IActionResult LogOut()
         {
             _userService.Logout();
