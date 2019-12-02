@@ -32,12 +32,13 @@ namespace Quiz_co.Web.Controllers
         [HttpPost("newquiz")]
         public ActionResult NewQuiz([FromBody] QuizViewModel model)
         {
-            UserViewModel user = _userService.GetCurrentUser(User.Identity.Name);
+            UserViewModel user = _userService.GetCurrentUser(model.UserName);
             try
             {
                 model.User = user;
                 _quizService.CreateQuiz(model);
-                return Ok("Successfully added quiz");
+                var quiz = _quizService.GetAllQuizzes().LastOrDefault();
+                return Ok(quiz);
             }
             catch (Exception e)
             {

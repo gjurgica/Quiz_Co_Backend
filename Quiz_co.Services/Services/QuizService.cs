@@ -22,6 +22,7 @@ namespace Quiz_co.Services.Services
         public void CreateQuiz(QuizViewModel model)
         {
             _quizRepository.Insert(_mapper.Map<Quiz>(model));
+      
         }
 
         public void DeleteQuiz(int id)

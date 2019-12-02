@@ -8,6 +8,7 @@ namespace Quiz_co.ViewModels
     {
         public int Id { get; set; }
         public string Content { get; set; }
+        public int QuizId { get; set; }
 
         public QuizViewModel Quiz { get; set; }
         public IEnumerable<AnswerViewModel> Answers { get; set; }

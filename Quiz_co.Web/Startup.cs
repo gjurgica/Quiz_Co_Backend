@@ -91,8 +91,7 @@ namespace Quiz_co.Web
             {
                 options.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .WithExposedHeaders("Authorization");
+                        .AllowAnyHeader();
             });        
             app.UseAuthentication();
             app.UseMvc();
