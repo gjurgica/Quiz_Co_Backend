@@ -11,25 +11,24 @@ namespace Quiz_co.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionController : ControllerBase
+    public class AnswerController : ControllerBase
     {
+        private readonly IAnswerService _answerService;
         private readonly IQuestionService _questionService;
-        private readonly IQuizService _quizService;
-        public QuestionController(IQuestionService questionService, IQuizService quizService)
+        public AnswerController(IAnswerService answerService,IQuestionService questionService)
         {
+            _answerService = answerService;
             _questionService = questionService;
-            _quizService = quizService;
         }
-        [HttpPost("newquestion")]
-        public ActionResult NewQuestion([FromBody] QuestionViewModel model)
+        [HttpPost("newanswer")]
+        public ActionResult NewAnswer([FromBody] AnswerViewModel model)
         {
             try
             {
-                var quiz = _quizService.GetQuizById(model.QuizId);
-                model.Quiz = quiz;
-                _questionService.CreateQuestion(model);
-                var question = _questionService.GetAllQuestions().LastOrDefault();
-                return Ok(question);
+                var question = _questionService.GetQuestionById(model.QuestionId);
+                model.Question = question;
+                _answerService.CreateAnswer(model);
+                return Ok(question.Id);
             }
             catch (Exception e)
             {
