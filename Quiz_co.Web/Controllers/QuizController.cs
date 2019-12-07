@@ -29,6 +29,12 @@ namespace Quiz_co.Web.Controllers
             var quizes = _quizService.GetAllQuizzes();
             return Ok(quizes);
         }
+        [HttpGet("{id}")]
+        public ActionResult<QuizViewModel> Get(int id)
+        {
+            var quiz = _quizService.GetQuizById(id);
+            return Ok(quiz);
+        }
         [HttpPost("newquiz")]
         public ActionResult NewQuiz([FromBody] QuizViewModel model)
         {
