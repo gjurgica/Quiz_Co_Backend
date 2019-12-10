@@ -33,7 +33,7 @@ namespace Quiz_co.Web.Controllers
         public ActionResult<QuizViewModel> Get(int id)
         {
             var quiz = _quizService.GetQuizById(id);
-            return Ok(quiz);
+            return Ok(quiz.Questions);
         }
         [HttpPost("newquiz")]
         public ActionResult NewQuiz([FromBody] QuizViewModel model)
