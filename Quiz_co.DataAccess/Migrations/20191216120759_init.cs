@@ -222,27 +222,27 @@ namespace Quiz_co.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da", "02ff8218-efb5-46ef-a99d-8be120e16058", "admin", "ADMIN" });
+                values: new object[] { "277c9bb0-7cfb-4e4b-ae37-1793f23839ea", "b4e359e3-0369-4490-8488-9b7072fa9a32", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "66f53279-69af-4db5-814d-9f63612dac02", "be753643-dd3d-4c94-a2c8-4e1af3094f7b", "user", "USER" });
+                values: new object[] { "10aeff41-509f-47e1-9442-aef11d44ddbf", "1f2fd618-5dea-4a07-a3be-2ed99243a8a6", "user", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImageUrl", "Joined", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8094066f-3da4-4cd6-ba22-356f93061210", 0, "13e919db-67cf-4d39-a71d-6cf5b0176898", "bob@gmail.com", true, "Bob", null, new DateTime(2019, 11, 19, 12, 38, 0, 300, DateTimeKind.Local), "Bobsky", false, null, "BOB@GMAIL.COM", "BOBY", "AQAAAAEAACcQAAAAELU9QwmcT9KuqIcRP5wQe6v4Oim/9WA01EY8KsaWoisaj0a+mAZjSOIDtPvNjilExw==", null, false, "", false, "Boby" });
+                values: new object[] { "92282687-0ae6-4339-8569-bb4e8abe4988", 0, "466cabb0-6db7-46c2-93a7-193bb163acae", "bob@gmail.com", true, "Bob", null, new DateTime(2019, 12, 16, 13, 7, 58, 588, DateTimeKind.Local), "Bobsky", false, null, "BOB@GMAIL.COM", "BOBY", "AQAAAAEAACcQAAAAEAtAhnMdeUjNyg1kNBiz5f/L+OpeSpsFVxUJFwb4GwCjmHRAizNpqlsaNlPfg0W3xg==", null, false, "", false, "Boby" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "8094066f-3da4-4cd6-ba22-356f93061210", "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da" });
+                values: new object[] { "92282687-0ae6-4339-8569-bb4e8abe4988", "277c9bb0-7cfb-4e4b-ae37-1793f23839ea" });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "Id", "ImageUrl", "Title", "UserId" },
-                values: new object[] { 1, "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", "Test Your Halloween IQ!", "8094066f-3da4-4cd6-ba22-356f93061210" });
+                values: new object[] { 1, "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", "Test Your Halloween IQ!", "92282687-0ae6-4339-8569-bb4e8abe4988" });
 
             migrationBuilder.InsertData(
                 table: "Questions",

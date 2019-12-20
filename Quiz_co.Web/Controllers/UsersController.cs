@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quiz_co.Services.Interfaces;
@@ -16,14 +18,21 @@ namespace Quiz_co.Web.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly IHostingEnvironment _hosting;
+        public UsersController(IUserService userService, IHostingEnvironment hosting)
         {
             _userService = userService;
+            _hosting = hosting;
         }
         [HttpGet]
         public ActionResult<IEnumerable<UserViewModel>> Get()
         {
             return Ok(_userService.GetAllUsers());
+        }
+        [HttpGet("{username}")]
+        public ActionResult<UserViewModel> Get(string username)
+        {
+            return Ok(_userService.GetCurrentUser(username));
         }
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginViewModel model)
@@ -56,6 +65,38 @@ namespace Quiz_co.Web.Controllers
         {
             _userService.Logout();
             return Ok("User is logout");
+        }
+        [HttpPost("{username}")]
+        public IActionResult UploadPhoto(string username,  IFormFile photo)
+        {
+            try
+            {
+                var user = _userService.GetCurrentUser(username);
+                if (user == null)
+                    return NotFound();
+
+                var path = Path.Combine(_hosting.WebRootPath, "usersImages");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+
+
+                var filePath = Path.Combine(path, fileName);
+
+                photo.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                user.ImageUrl = fileName;
+                _userService.UpdateUser(user);
+
+                return Ok(user);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
         }
     }
 }

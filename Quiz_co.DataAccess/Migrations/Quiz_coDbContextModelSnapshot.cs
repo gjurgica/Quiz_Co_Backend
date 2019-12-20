@@ -43,8 +43,8 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da", ConcurrencyStamp = "02ff8218-efb5-46ef-a99d-8be120e16058", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "66f53279-69af-4db5-814d-9f63612dac02", ConcurrencyStamp = "be753643-dd3d-4c94-a2c8-4e1af3094f7b", Name = "user", NormalizedName = "USER" }
+                        new { Id = "277c9bb0-7cfb-4e4b-ae37-1793f23839ea", ConcurrencyStamp = "b4e359e3-0369-4490-8488-9b7072fa9a32", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "10aeff41-509f-47e1-9442-aef11d44ddbf", ConcurrencyStamp = "1f2fd618-5dea-4a07-a3be-2ed99243a8a6", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
@@ -119,7 +119,7 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles");
 
                     b.HasData(
-                        new { UserId = "8094066f-3da4-4cd6-ba22-356f93061210", RoleId = "7e90e49b-7350-4e8a-bc7a-ba4b49bee0da" }
+                        new { UserId = "92282687-0ae6-4339-8569-bb4e8abe4988", RoleId = "277c9bb0-7cfb-4e4b-ae37-1793f23839ea" }
                     );
                 });
 
@@ -207,7 +207,7 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("Quizzes");
 
                     b.HasData(
-                        new { Id = 1, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", Title = "Test Your Halloween IQ!", UserId = "8094066f-3da4-4cd6-ba22-356f93061210" }
+                        new { Id = 1, ImageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Ftopics%2Fhalloween&psig=AOvVaw2JCtiYSkiYUwSMY2cKYkgm&ust=1574249677933000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjBo6iX9uUCFQAAAAAdAAAAABAD", Title = "Test Your Halloween IQ!", UserId = "92282687-0ae6-4339-8569-bb4e8abe4988" }
                     );
                 });
 
@@ -272,7 +272,7 @@ namespace Quiz_co.DataAccess.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "8094066f-3da4-4cd6-ba22-356f93061210", AccessFailedCount = 0, ConcurrencyStamp = "13e919db-67cf-4d39-a71d-6cf5b0176898", Email = "bob@gmail.com", EmailConfirmed = true, FirstName = "Bob", Joined = new DateTime(2019, 11, 19, 12, 38, 0, 300, DateTimeKind.Local), LastName = "Bobsky", LockoutEnabled = false, NormalizedEmail = "BOB@GMAIL.COM", NormalizedUserName = "BOBY", PasswordHash = "AQAAAAEAACcQAAAAELU9QwmcT9KuqIcRP5wQe6v4Oim/9WA01EY8KsaWoisaj0a+mAZjSOIDtPvNjilExw==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "Boby" }
+                        new { Id = "92282687-0ae6-4339-8569-bb4e8abe4988", AccessFailedCount = 0, ConcurrencyStamp = "466cabb0-6db7-46c2-93a7-193bb163acae", Email = "bob@gmail.com", EmailConfirmed = true, FirstName = "Bob", Joined = new DateTime(2019, 12, 16, 13, 7, 58, 588, DateTimeKind.Local), LastName = "Bobsky", LockoutEnabled = false, NormalizedEmail = "BOB@GMAIL.COM", NormalizedUserName = "BOBY", PasswordHash = "AQAAAAEAACcQAAAAEAtAhnMdeUjNyg1kNBiz5f/L+OpeSpsFVxUJFwb4GwCjmHRAizNpqlsaNlPfg0W3xg==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "Boby" }
                     );
                 });
 
