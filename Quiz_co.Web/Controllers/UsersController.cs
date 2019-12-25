@@ -19,6 +19,7 @@ namespace Quiz_co.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IHostingEnvironment _hosting;
+        private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
         public UsersController(IUserService userService, IHostingEnvironment hosting)
         {
             _userService = userService;
@@ -79,8 +80,16 @@ namespace Quiz_co.Web.Controllers
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
+
+                if (photo.Length > 10 * 1024 * 1024)
+                    return BadRequest("Maximum file size exceeded");
+
+                if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(photo.FileName)))
+                    return BadRequest("Invalid file type");
+
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
 
+                var folderName = Path.Combine( "usersImages", fileName).Replace("\\", "/");
 
                 var filePath = Path.Combine(path, fileName);
 
@@ -89,7 +98,7 @@ namespace Quiz_co.Web.Controllers
                 user.ImageUrl = fileName;
                 _userService.UpdateUser(user);
 
-                return Ok(user);
+                return Ok(new { folderName });
 
             }
             catch (Exception e)
