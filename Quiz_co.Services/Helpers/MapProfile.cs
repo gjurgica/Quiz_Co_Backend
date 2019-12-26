@@ -32,6 +32,7 @@ namespace Quiz_co.Services.Helpers
                 .ForMember(a => a.Id, src => src.Ignore());
 
             CreateMap<User, UserViewModel>()
+                .ForMember(uv => uv.Joined, src => src.MapFrom(u => u.Joined.ToString("d")))
                .ReverseMap()
                .ForMember(u => u.EmailConfirmed, src => src.UseValue(true));
             CreateMap<RegisterViewModel, User>()

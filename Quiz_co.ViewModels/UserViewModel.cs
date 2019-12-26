@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Quiz_co.ViewModels
@@ -11,7 +12,8 @@ namespace Quiz_co.ViewModels
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public DateTime Joined { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public string Joined { get; set; }
         public string ImageUrl { get; set; }
         public string Token { get; set; }
     }
