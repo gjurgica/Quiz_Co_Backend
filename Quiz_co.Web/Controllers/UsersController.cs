@@ -67,7 +67,7 @@ namespace Quiz_co.Web.Controllers
             _userService.Logout();
             return Ok("User is logout");
         }
-        [HttpPost]
+        [HttpPost("update")]
         public IActionResult Update([FromBody] UserViewModel user)
         {
             _userService.UpdateUser(user);

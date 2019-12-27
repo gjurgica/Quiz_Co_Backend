@@ -12,7 +12,6 @@ namespace Quiz_co.ViewModels
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public string Joined { get; set; }
         public string ImageUrl { get; set; }
         public string Token { get; set; }
